@@ -13,28 +13,25 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Build archive
+    - name: Build for Simulator
       run: |
-        xcodebuild archive \
+        xcodebuild build \
           -project AlarmKit-ScheduleAndAlert.xcodeproj \
           -scheme AlarmKit-ScheduleAndAlert \
-          -archivePath $PWD/build/AlarmKit.xcarchive \
-          -sdk iphoneos \
+          -sdk iphonesimulator \
           -configuration Release \
+          -derivedDataPath $PWD/build \
           CODE_SIGN_IDENTITY="" \
-          CODE_SIGNING_REQUIRED=NO \
-          CODE_SIGNING_ALLOWED=NO
+          CODE_SIGNING_REQUIRED=NO
 
-    - name: Export IPA
+    - name: Create App Archive
       run: |
-        xcodebuild -exportArchive \
-          -archivePath $PWD/build/AlarmKit.xcarchive \
-          -exportPath $PWD/build \
-          -exportOptionsPlist exportOptions.plist
+        cd build/Build/Products/Release-iphonesimulator
+        zip -r ../../../../AlarmKit.app.zip *.app
 
-    - name: Upload IPA
+    - name: Upload App
       uses: actions/upload-artifact@v4
       with:
-        name: AlarmKit-IPA
-        path: build/*.ipa
+        name: AlarmKit-Simulator-App
+        path: AlarmKit.app.zip
         retention-days: 30

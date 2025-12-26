@@ -1,0 +1,9 @@
+//
+// SampleCode.xcconfig
+//
+
+// Set the development team and code signing identity
+DEVELOPMENT_TEAM =
+CODE_SIGN_IDENTITY =
+CODE_SIGN_STYLE = Manual
+IPHONEOS_DEPLOYMENT_TARGET = 17.0

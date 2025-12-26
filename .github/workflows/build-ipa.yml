@@ -13,7 +13,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Build for Simulator
+    - name: Build for iOS 26
       run: |
         xcodebuild build \
           -project AlarmKit-ScheduleAndAlert.xcodeproj \
@@ -21,6 +21,8 @@ jobs:
           -sdk iphonesimulator \
           -configuration Release \
           -derivedDataPath $PWD/build \
+          MACOSX_DEPLOYMENT_TARGET=26.2 \
+          IPHONEOS_DEPLOYMENT_TARGET=26.0 \
           CODE_SIGN_IDENTITY="" \
           CODE_SIGNING_REQUIRED=NO
 
